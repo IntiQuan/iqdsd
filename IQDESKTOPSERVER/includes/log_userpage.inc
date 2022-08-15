@@ -20,7 +20,6 @@ $LOG .= ":::"."image=".$image;
 $LOG .= ":::"."nrcores=".$nrcores;
 $LOG .= ":::"."memgb=".$memgb;
 $LOG .= ":::"."theme=".$theme;
-$LOG .= ":::"."allow_sudo=".$allow_sudo;
 $LOG .= ":::"."safety_check=".$safety_check;
 $LOG .= ":::"."safety_check_required=".$safety_check_required;
 
