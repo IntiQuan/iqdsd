@@ -43,9 +43,10 @@ if (strcmp($user_check,$user)!=0) $OK = false;
 if (!($action=="stop" || $action=="start" || $action=="")) $OK = false;
 
 // $image - syntax: "intiquan/iqdesktop:number.number". No space etc.
+// or: "intiquan/iqdesktop:number.number.number"
 $image_check = str_replace("intiquan/iqdesktop:", "", $image);
 $image_check = preg_replace('/[0-9]+/', '', $image_check);
-if (!($image_check=="." || $image_check=="")) $OK = false;
+if (!($image_check=="." || $image_check==".." || $image_check=="")) $OK = false;
 
 // $nrcores - numeric!
 $nrcores_check = preg_replace('/[^0-9]/', '', $nrcores);
