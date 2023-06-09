@@ -13,10 +13,10 @@ while [ 1 ]; do
     # Read memory and disk utilization
     MEMORY=$(free -m | grep Mem | awk 'NR==1{printf "%.2f%%", $3*100/$2 }')
     DISK=$(df -h | awk '$NF=="/"{printf "%s", $5}')
-    # Read the CPU load as averages over 1, 5, and 15 minutes
-    LOAD_1MIN=$(top -bn1 | grep load | awk -v x="$NRCORES" '{printf "%.2f%%", $(NF-2)/x}')
-    LOAD_5MIN=$(top -bn1 | grep load | awk -v x="$NRCORES" '{printf "%.2f%%", $(NF-1)/x}')
-    LOAD_15MIN=$(top -bn1 | grep load | awk -v x="$NRCORES" '{printf "%.2f%%\n", $(NF)/x}')
+    # Read the CPU load as averages over 1, 5, and 15 minutes and convert to %
+    LOAD_1MIN=$(top -bn1 | grep load | awk -v x="$NRCORES" '{printf "%.2f%%", $(NF-2)/x*100}')
+    LOAD_5MIN=$(top -bn1 | grep load | awk -v x="$NRCORES" '{printf "%.2f%%", $(NF-1)/x*100}')
+    LOAD_15MIN=$(top -bn1 | grep load | awk -v x="$NRCORES" '{printf "%.2f%%\n", $(NF)/x*100}')
     # Write out the information in CSV manner
     echo "$DATE,$MEMORY,$DISK,$LOAD_1MIN,$LOAD_5MIN,$LOAD_15MIN$CPU"
     # Sleep for defined period (seconds)
