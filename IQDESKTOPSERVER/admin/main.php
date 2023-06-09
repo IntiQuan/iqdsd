@@ -142,7 +142,6 @@ include("../includes/log_adminpage.inc"); // Create logs (after get variables)
         if ($action == "stopMonitoring") {
             // Kill the sleep and monitor_stats thingy
             $command = 'PID=$(ps -A | grep monitor_stats | awk \'{print $1}\'); kill -9 $PID';
-            echo $command;
             shell_exec($command);
             $command = "PID=$(ps -A | grep sleep | awk '{print $1}'); kill -9 $PID";
             shell_exec($command);
