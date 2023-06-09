@@ -132,6 +132,31 @@ include("../includes/log_adminpage.inc"); // Create logs (after get variables)
     ?>
 
     <?php
+    if ($do == "Monitoring") {
+        if ($action == "startMonitoring") {
+            // Start the monitoring script ... 
+            shell_exec("chmod +x ../stats/monitor_stats.sh");
+	        $command = "../stats/monitor_stats.sh > ../stats/stats.log &";
+            shell_exec($command);
+        }
+        if ($action == "stopMonitoring") {
+            // Kill the sleep and monitor_stats thingy
+            $command = 'PID=$(ps -A | grep monitor_stats | awk \'{print $1}\'); kill -9 $PID';
+            echo $command;
+            shell_exec($command);
+            $command = "PID=$(ps -A | grep sleep | awk '{print $1}'); kill -9 $PID";
+            shell_exec($command);
+            // Remove log file
+            unlink("../stats/stats.log");
+        }
+    ?>
+        <h3>Settings saved!</h3>
+        <a href="index.php">Click to Reload Page (showing new settings might not show immediately due to caching)</a>
+    <?php
+    }
+    ?>
+
+    <?php
     if ($do == "showsettings") {
         // Show the settings form
     ?>
@@ -222,6 +247,44 @@ include("../includes/log_adminpage.inc"); // Create logs (after get variables)
                 <td>Number of days until expiration</td>
             </tr>
         <?php
+        }
+        echo "</table>";
+        echo "</form>";
+        ?>
+
+	<h3>Server Load Monitoring</h3>
+        <?php
+        $monitoringLog = "../stats/stats.log";
+        $buttonText = "Start Monitoring";
+        $buttonStyle = "buttonRed";
+        $action = "startMonitoring";
+        if (file_exists($monitoringLog)) {
+            $buttonText = "Stop Monitoring";
+            $buttonStyle = "buttonGreen";
+            $action = "stopMonitoring";
+        }
+        // Generate button to create or remove certificates
+        $form = "form_monitoring";
+        echo '<form action="main.php" method="post" id="' . $form . '">';
+        echo '<input type="hidden" name="do" value="Monitoring">';
+        echo "<table>";
+        echo "<tr>" . '<td class="control">';
+        echo '<input type="hidden" name="action" value="' . $action . '">';
+        echo '<button type="submit" form="' . $form . '" value="Submit" class="' . $buttonStyle . '"><span>' . $buttonText . '</span></button>' . "<br>";
+        echo '</td>';
+        echo "<td colspan=2>";
+        echo "Enable logging of disk, memory and CPU load in a log file. The information is stored in CSV format and once started it can be downloaded. The interval for collection of information is 15 min.";
+        if ($buttonStyle == "buttonGreen") {
+        ?>
+            <br>
+            <ul>
+                <li><a href="../stats/stats.log" target="new">Monitoring log file</a></li>
+            </ul>
+        <?php
+        }
+        echo "</td>";
+        if ($buttonStyle == "buttonRed") {
+            echo "</tr>";
         }
         echo "</table>";
         echo "</form>";

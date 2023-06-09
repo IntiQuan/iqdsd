@@ -1,6 +1,3 @@
-- Show disk&memory admin
-- Show CPU load admin
-
 - add stop delay in web as possibility
 - https (as option)
 - Networks (general and later admin)

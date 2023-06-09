@@ -1,7 +1,7 @@
 #! /bin/bash
 # Generation of a log file for monitoring the use of the computational server
 # Define interval time in seconds - lets use 15 minutes 
-INTERVAL=900 # 15*60 = 900 seconds
+INTERVAL=1 # 15*60 = 900 seconds
 # Get number of cores to adjust the load to a healthy max of 100%
 NRCORES=$(lscpu | grep "CPU(s):" | awk '{print $2}')
 # Header for CSV information
