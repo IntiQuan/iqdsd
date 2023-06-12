@@ -5,7 +5,7 @@ INTERVAL=900 # 15*60 = 900 seconds
 # Get number of cores to adjust the load to a healthy max of 100%
 NRCORES=$(lscpu | grep "CPU(s):" | awk '{print $2}')
 # Header for CSV information
-printf "Date,Memory,Disk,Load_1min,Load_5min,Load_15min\n"
+printf "Date,Memory,Disk,Load_1min,Load_5min,Load_15min,Temp_CPU,Temp_CPU_max,Temp_CPU_crit,Fan_min\n"
 # Run for ever
 while [ 1 ]; do
     # Get current date in default format
@@ -17,8 +17,14 @@ while [ 1 ]; do
     LOAD_1MIN=$(top -bn1 | grep load | awk -v x="$NRCORES" '{printf "%.2f%%", $(NF-2)/x*100}')
     LOAD_5MIN=$(top -bn1 | grep load | awk -v x="$NRCORES" '{printf "%.2f%%", $(NF-1)/x*100}')
     LOAD_15MIN=$(top -bn1 | grep load | awk -v x="$NRCORES" '{printf "%.2f%%\n", $(NF)/x*100}')
+    # Max CPU temperature (approximation)
+    TEMP_CPU=$(sensors -u | grep _input | grep temp | awk '{print $2}' | sort -n | tail -1)
+    TEMP_CPU_MAX=$(sensors -u | grep _max | grep temp | awk '{print $2}' | sort -n | tail -1)
+    TEMP_CPU_CRIT=$(sensors -u | grep _crit | grep temp | awk '{print $2}' | sort -n | tail -1)
+    # Fan info (only minimum fan speed - to check for 0
+    FAN_MIN=$(sensors -u | grep _input | grep fan | awk '{print $2}' | sort -n -r | tail -1)
     # Write out the information in CSV manner
-    echo "$DATE,$MEMORY,$DISK,$LOAD_1MIN,$LOAD_5MIN,$LOAD_15MIN$CPU"
+    echo "$DATE,$MEMORY,$DISK,$LOAD_1MIN,$LOAD_5MIN,$LOAD_15MIN,$TEMP_CPU,$TEMP_CPU_MAX,$TEMP_CPU_CRIT,$FAN_MIN"
     # Sleep for defined period (seconds)
     sleep $INTERVAL
 done
