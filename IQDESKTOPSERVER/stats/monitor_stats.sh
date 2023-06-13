@@ -22,11 +22,11 @@ while [ 1 ]; do
     TEMP_CPU_LO=$(sensors -u | grep _input | grep temp | awk '{print $2}' | sort -n -r | tail -1)
     TEMP_CPU_MAX=$(sensors -u | grep _max | grep temp | awk '{print $2}' | sort -n | tail -1)
     TEMP_CPU_CRIT=$(sensors -u | grep _crit | grep temp | awk '{print $2}' | sort -n | tail -1)
-    # Fan info (only minimum fan speed - to check for 0
-    FAN_MIN=$(sensors -u | grep _input | grep fan | awk '{print $2}' | sort -n -r | tail -1)
-    FAN_MAX=$(sensors -u | grep _input | grep fan | awk '{print $2}' | sort -n | tail -1)
+    # Fan info 
+    FAN_LO=$(sensors -u | grep _input | grep fan | awk '{print $2}' | sort -n -r | tail -1)
+    FAN_HI=$(sensors -u | grep _input | grep fan | awk '{print $2}' | sort -n | tail -1)
     # Write out the information in CSV manner
-    echo "$DATE,$MEMORY,$DISK,$LOAD_1MIN,$LOAD_5MIN,$LOAD_15MIN,$TEMP_CPU_LO,$TEMP_CPU_HI,$TEMP_CPU_MAX,$TEMP_CPU_CRIT,$FAN_MIN,$FAN_MAX"
+    echo "$DATE,$MEMORY,$DISK,$LOAD_1MIN,$LOAD_5MIN,$LOAD_15MIN,$TEMP_CPU_LO,$TEMP_CPU_HI,$TEMP_CPU_MAX,$TEMP_CPU_CRIT,$FAN_LO,$FAN_HI"
     # Sleep for defined period (seconds)
     sleep $INTERVAL
 done
