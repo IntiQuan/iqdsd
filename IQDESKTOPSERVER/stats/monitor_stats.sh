@@ -5,7 +5,7 @@ INTERVAL=900 # 15*60 = 900 seconds
 # Get number of cores to adjust the load to a healthy max of 100%
 NRCORES=$(lscpu | grep "CPU(s):" | awk '{print $2}')
 # Header for CSV information
-printf "Date,Memory,Disk,Load_1min,Load_5min,Load_15min,Temp_CPU,Temp_CPU_max,Temp_CPU_crit,Fan_min\n"
+printf "Date,Memory,Disk,Load_1min,Load_5min,Load_15min,Temp_CPU_LO,Temp_CPU_HI,Temp_CPU_max,Temp_CPU_crit,Fan_LO,Fan_HI\n"
 # Run for ever
 while [ 1 ]; do
     # Get current date in default format
@@ -30,4 +30,3 @@ while [ 1 ]; do
     # Sleep for defined period (seconds)
     sleep $INTERVAL
 done
-
