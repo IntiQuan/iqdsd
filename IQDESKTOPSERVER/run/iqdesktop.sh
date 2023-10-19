@@ -1,6 +1,6 @@
 #!/bin/bash
 # ------------------------------------------------------------------------------------------------
-#  iqdesktop start username config.csv image ncores memorygb theme swapspace sudo privileged mount_basename iqrtoolscompliance sshserver shinyserver macaddress timezone iqreporttemplate nonmemlicensekey monolixlicensekey organization licensekey [timedelaystophours]
+#  iqdesktop start username config.csv image ncores memorygb theme swapspace sudo privileged mount_basename iqrtoolscompliance sshserver shinyserver macaddress timezone iqreporttemplate nonmemlicensekey monolixlicensekey organization licensekey mount1 mount2 mount3 mount4 mount5 mountip mountoptions [timedelaystophours]
 #  test stop all|username 
 # ------------------------------------------------------------------------------------------------
 
@@ -19,9 +19,9 @@
 NARGS=$#
 
 # Require correct number of input arguments
-if [[ $NARGS != 2 ]] && [[ $NARGS < 19 ]]; then 
+if [[ $NARGS != 2 ]] && [[ $NARGS < 26 ]]; then 
 	echo "Usage:"
-	echo "        iqdesktop start username config.csv image ncores memorygb theme swapspace sudo privileged mount_basename iqrtoolscompliance sshserver shinyserver macaddress timezone iqreporttemplate nonmemlicensekey monolixlicensekey organization licensekey [timedelaystophours]"
+	echo "        iqdesktop start username config.csv image ncores memorygb theme swapspace sudo privileged mount_basename iqrtoolscompliance sshserver shinyserver macaddress timezone iqreporttemplate nonmemlicensekey monolixlicensekey organization licensekey mount1 mount2 mount3 mount4 mount5 mountip mountoptions [timedelaystophours]"
 	echo "        iqdesktop stop username"
 	exit 0
 fi
@@ -39,8 +39,8 @@ if [[ $COMMAND == "stop" ]];  then
 fi
 
 if [[ $COMMAND == "start" ]]; then
-    if [[ $NARGS < 21 ]]; then
-        echo "start command requires 21 or 22 input arguments - not useful for command line ..."
+    if [[ $NARGS < 28 ]]; then
+        echo "start command requires 28 or 29 input arguments - not useful for command line ..."
         exit 0
     fi
 fi
@@ -82,7 +82,14 @@ ARGnonmemlicensekey=${18}
 ARGmonolixlicensekey=${19}
 ARGorganization=${20}
 ARGlicensekey=${21}
-DELAYHOURS=${22}
+ARGmount1=${22} 
+ARGmount2=${23} 
+ARGmount3=${24} 
+ARGmount4=${25} 
+ARGmount5=${26} 
+ARGmountip=${27} 
+ARGmountoptions=${28}
+DELAYHOURS=${29}
 
 if [[ $ARGiqreporttemplate == "default" ]]; then
     ARGiqreporttemplate=
@@ -103,7 +110,7 @@ chmod +x stop_runs.sh
 if [[ $COMMAND == "start" ]]; then 
     OLDIFS=$IFS
     IFS=','
-    while read NAME USER SAFETY_CHECK PASSWORD VOLUME_MAP VNCPORT SSHPORT SHINY_SERVER_PORT USER_ID IQREPORT_LICENSE_KEY AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY MOUNT_1_LABEL MOUNT_1_SERVER_IP MOUNT_1_SERVER_FOLDER MOUNT_1_OPTIONS MOUNT_2_LABEL MOUNT_2_SERVER_IP MOUNT_2_SERVER_FOLDER MOUNT_2_OPTIONS MOUNT_3_LABEL MOUNT_3_SERVER_IP MOUNT_3_SERVER_FOLDER MOUNT_3_OPTIONS MOUNT_4_LABEL MOUNT_4_SERVER_IP MOUNT_4_SERVER_FOLDER MOUNT_4_OPTIONS MOUNT_5_LABEL MOUNT_5_SERVER_IP MOUNT_5_SERVER_FOLDER MOUNT_5_OPTIONS
+    while read NAME USER SAFETY_CHECK PASSWORD VOLUME_MAP VNCPORT SSHPORT SHINY_SERVER_PORT USER_ID IQREPORT_LICENSE_KEY AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY
      
     do
         # Do not handle header row ("USER" in "USER" column)
@@ -149,11 +156,11 @@ if [[ $COMMAND == "start" ]]; then
                     "$ARGMEM" "$ARGtimezone" "$ARGiqrtoolscompliance" "$ARGiqreporttemplate" "$IQREPORT_LICENSE_KEY" "$ARGnonmemlicensekey" \
                     "$ARGmonolixlicensekey" "$VNC_PRIVATE_KEY" "$VNC_CERTIFICATE" "$AWS_ACCESS_KEY_ID" "$AWS_SECRET_ACCESS_KEY" \
                     "$ARGPRIVILEGED" "$ARGMOUNTBASENAME" \
-                    "$MOUNT_1_LABEL" "$MOUNT_1_SERVER_IP" "$MOUNT_1_SERVER_FOLDER" "$MOUNT_1_OPTIONS" \
-                    "$MOUNT_2_LABEL" "$MOUNT_2_SERVER_IP" "$MOUNT_2_SERVER_FOLDER" "$MOUNT_2_OPTIONS" \
-                    "$MOUNT_3_LABEL" "$MOUNT_3_SERVER_IP" "$MOUNT_3_SERVER_FOLDER" "$MOUNT_3_OPTIONS" \
-                    "$MOUNT_4_LABEL" "$MOUNT_4_SERVER_IP" "$MOUNT_4_SERVER_FOLDER" "$MOUNT_4_OPTIONS" \
-                    "$MOUNT_5_LABEL" "$MOUNT_5_SERVER_IP" "$MOUNT_5_SERVER_FOLDER" "$MOUNT_5_OPTIONS" \
+                    "$ARGmount1" "$ARGmountip" "$ARGmount1" "$ARGmountoptions" \
+                    "$ARGmount2" "$ARGmountip" "$ARGmount2" "$ARGmountoptions" \
+                    "$ARGmount3" "$ARGmountip" "$ARGmount3" "$ARGmountoptions" \
+                    "$ARGmount4" "$ARGmountip" "$ARGmount4" "$ARGmountoptions" \
+                    "$ARGmount5" "$ARGmountip" "$ARGmount5" "$ARGmountoptions" \
                     "$ARGorganization" "$ARGlicensekey"
 					
 				# If defined then start the time delayed stopping of the container

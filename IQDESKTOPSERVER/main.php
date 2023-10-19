@@ -112,7 +112,13 @@ $pathCSV = "settings/";
                 $iqrtoolscompliance = "FALSE"; if ($IQRTOOLS_COMPLIANCE) $iqrtoolscompliance = "TRUE";
                 $sshserver = "FALSE"; if ($SSH_SERVER) $sshserver = "TRUE";
                 $csvfilepath = "../".$pathCSV.$csvfile;
-      
+
+                // Handle MOUNT label definitions to ensure no double definitions
+                if ($MOUNT5_LABEL==$MOUNT4_LABEL | $MOUNT5_LABEL==$MOUNT4_LABEL | $MOUNT5_LABEL==$MOUNT2_LABEL | $MOUNT5_LABEL==$MOUNT1_LABEL) $MOUNT5_LABEL = "undefined";
+                if ($MOUNT4_LABEL==$MOUNT3_LABEL | $MOUNT4_LABEL==$MOUNT2_LABEL | $MOUNT4_LABEL==$MOUNT1_LABEL) $MOUNT4_LABEL = "undefined";
+                if ($MOUNT3_LABEL==$MOUNT2_LABEL | $MOUNT3_LABEL==$MOUNT1_LABEL) $MOUNT3_LABEL = "undefined";
+                if ($MOUNT2_LABEL==$MOUNT1_LABEL) $MOUNT2_LABEL = "undefined";
+
                 # Construct iqdesktop.sh call
                 $command = "./iqdesktop.sh start " . $user . " " . $csvfilepath . " " . $image . " " . $nrcores . " " . $memgb . " " . $theme . " " . $SHM_SIZE_GB . " ";
                 $command .= $ALLOW_SUDO . " " . $PRIVILEGED . " " . $MOUNT_BASENAME . " ";
@@ -120,13 +126,20 @@ $pathCSV = "settings/";
                 $command .= $NONMEM_LICENSE_KEY . " \"" . $MONOLIX_LICENSE_KEY . "\" ";
                 $command .= " \"" . $ORGANIZATION . "\" ";
                 $command .= " \"" . $LICENSEKEY . "\" ";
+                $command .= " \"" . $MOUNT1_LABEL . "\" ";
+                $command .= " \"" . $MOUNT2_LABEL . "\" ";
+                $command .= " \"" . $MOUNT3_LABEL . "\" ";
+                $command .= " \"" . $MOUNT4_LABEL . "\" ";
+                $command .= " \"" . $MOUNT5_LABEL . "\" ";
+                $command .= " \"" . $LIST_SERVER_IP . "\" ";
+                $command .= " \"" . $LIST_SERVER_OPTIONS . "\" ";
 
                 # Check if demo mode and then add the stop time
                 if ($csvfile=="01_demo.csv") $command .= $MAX_TIME_HOURS_DEMO . " ";
 
                 $command .= "1>> ../logs/iqdesktop.log 2>>../logs/iqdesktop_error.log &";
 
-				#echo $command."<br>";
+				#echo $command."<br>"; exit;
             } else {
                 header("Location: safetycheck.html");
             }
@@ -243,31 +256,6 @@ $pathCSV = "settings/";
             $SSHPORT = $value[6];
             $SHINY_SERVER_PORT = $value[7];
             $USER_ID = $value[8];
-
-            $MOUNT_1_LABEL = $value[12];
-            $MOUNT_1_SERVER_IP = $value[13];
-            $MOUNT_1_SERVER_FOLDER = $value[14]; 
-            $MOUNT_1_OPTIONS = $value[15];
-            
-            $MOUNT_2_LABEL = $value[16]; 
-            $MOUNT_2_SERVER_IP = $value[17]; 
-            $MOUNT_2_SERVER_FOLDER = $value[18]; 
-            $MOUNT_2_OPTIONS = $value[19]; 
-            
-            $MOUNT_3_LABEL = $value[20];  
-            $MOUNT_3_SERVER_IP = $value[21];  
-            $MOUNT_3_SERVER_FOLDER = $value[22];  
-            $MOUNT_3_OPTIONS = $value[23]; 
-            
-            $MOUNT_4_LABEL = $value[24]; 
-            $MOUNT_4_SERVER_IP = $value[25];  
-            $MOUNT_4_SERVER_FOLDER = $value[26];  
-            $MOUNT_4_OPTIONS = $value[27]; 
-            
-            $MOUNT_5_LABEL = $value[28];  
-            $MOUNT_5_SERVER_IP = $value[29];  
-            $MOUNT_5_SERVER_FOLDER = $value[30];  
-            $MOUNT_5_OPTIONS = $value[31]; 
 
             if (!empty($USER)) {
 
@@ -548,12 +536,60 @@ $pathCSV = "settings/";
                     if ($IQRTOOLS_COMPLIANCE_SHOW) echo "<td class='blue'>" . $IQRTOOLS_COMPLIANCE . "</td>";
                     if ($IQREPORT_TEMPLATE_SHOW) echo "<td class='blue'>" . $IQREPORT_TEMPLATE . "</td>";
                     
-                    if ($MOUNT_SHOW) {
-                        echo "<td>" . $MOUNT_1_LABEL . "<br>" . $MOUNT_1_SERVER_IP . "<br>" . $MOUNT_1_SERVER_FOLDER . "<br>" . str_replace(":::",",",$MOUNT_1_OPTIONS) . "</td>";
-                        echo "<td>" . $MOUNT_2_LABEL . "<br>" . $MOUNT_2_SERVER_IP . "<br>" . $MOUNT_2_SERVER_FOLDER . "<br>" . str_replace(":::",",",$MOUNT_2_OPTIONS) . "</td>";
-                        echo "<td>" . $MOUNT_3_LABEL . "<br>" . $MOUNT_3_SERVER_IP . "<br>" . $MOUNT_3_SERVER_FOLDER . "<br>" . str_replace(":::",",",$MOUNT_3_OPTIONS) . "</td>";
-                        echo "<td>" . $MOUNT_4_LABEL . "<br>" . $MOUNT_4_SERVER_IP . "<br>" . $MOUNT_4_SERVER_FOLDER . "<br>" . str_replace(":::",",",$MOUNT_4_OPTIONS) . "</td>";
-                        echo "<td>" . $MOUNT_5_LABEL . "<br>" . $MOUNT_5_SERVER_IP . "<br>" . $MOUNT_5_SERVER_FOLDER . "<br>" . str_replace(":::",",",$MOUNT_5_OPTIONS) . "</td>";
+                    # Only show the folders for selection when the container is NOT running.
+                    # We will NOT store the state of the running containers and display it here!
+                    if ($MOUNT_SHOW & !$container_running) {
+                        // Read and evaluate $LIST_SERVER_FOLDERS to prepare for display in select option in the table
+                        $SERVER_FOLDERS_MOUNT = explode(",",$LIST_SERVER_FOLDERS);
+                        #print_r($SERVER_FOLDERS_MOUNT);
+                        
+                        # MOUNT 1
+                        echo '<td><select name="MOUNT1_LABEL">';
+                        foreach ($SERVER_FOLDERS_MOUNT as $value) {
+                            echo '  <option value="'.$value.'" ';
+                            if ($value == $SERVER_FOLDERS_MOUNT[0]) echo "selected";
+                            echo '>'.$value.'</option>';
+                        }
+                        echo '</select></td>';
+
+                        # MOUNT 2
+                        echo '<td><select name="MOUNT2_LABEL">';
+                        foreach ($SERVER_FOLDERS_MOUNT as $value) {
+                            echo '  <option value="'.$value.'" ';
+                            if ($value == $SERVER_FOLDERS_MOUNT[1]) echo "selected";
+                            echo '>'.$value.'</option>';
+                        }                        
+                        echo '</select></td>';
+
+                        # MOUNT 3
+                        echo '<td><select name="MOUNT3_LABEL">';
+                        foreach ($SERVER_FOLDERS_MOUNT as $value) {
+                            echo '  <option value="'.$value.'" ';
+                            if ($value == $SERVER_FOLDERS_MOUNT[2]) echo "selected";
+                            echo '>'.$value.'</option>';                        
+                        }
+                        echo '</select></td>';
+
+                        # MOUNT 4
+                        echo '<td><select name="MOUNT4_LABEL">';
+                        foreach ($SERVER_FOLDERS_MOUNT as $value) {
+                            echo '  <option value="'.$value.'" ';
+                            if ($value == $SERVER_FOLDERS_MOUNT[3]) echo "selected";
+                            echo '>'.$value.'</option>';                        
+                        }
+                        echo '</select></td>';
+
+                        # MOUNT 5
+                        echo '<td><select name="MOUNT5_LABEL">';
+                        foreach ($SERVER_FOLDERS_MOUNT as $value) {
+                            echo '  <option value="'.$value.'" ';
+                            if ($value == $SERVER_FOLDERS_MOUNT[4]) echo "selected";
+                            echo '>'.$value.'</option>';                        
+                        }
+                        echo '</select></td>';
+
+
+                    
                     }
 
                     echo "</tr></form>";

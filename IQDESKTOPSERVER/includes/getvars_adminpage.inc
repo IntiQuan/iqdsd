@@ -72,5 +72,14 @@ $set_IQRTOOLS_COMPLIANCE_SHOW = $_POST["set_IQRTOOLS_COMPLIANCE_SHOW"]; if ($set
 $set_IQREPORT_TEMPLATE_SHOW = $_POST["set_IQREPORT_TEMPLATE_SHOW"]; if ($set_IQREPORT_TEMPLATE_SHOW != "TRUE") $set_IQREPORT_TEMPLATE_SHOW = "FALSE";
 $set_MOUNT_SHOW = $_POST["set_MOUNT_SHOW"]; if ($set_MOUNT_SHOW != "TRUE") $set_MOUNT_SHOW = "FALSE";
 
+// Settings for server folder mounting
+$set_LIST_SERVER_IP = $_POST["set_LIST_SERVER_IP"];
+$set_LIST_SERVER_IP = str_replace(" ","",$set_LIST_SERVER_IP); if ($set_LIST_SERVER_IP=="") $set_LIST_SERVER_IP = "Undefined";
+$set_LIST_SERVER_OPTIONS = $_POST["set_LIST_SERVER_OPTIONS"];
+$set_LIST_SERVER_OPTIONS = str_replace(" ","",$set_LIST_SERVER_OPTIONS); if ($set_LIST_SERVER_OPTIONS=="") $set_LIST_SERVER_OPTIONS = "vers=2.0;username=%USER%;noauto;user";
+$set_LIST_SERVER_FOLDERS = $_POST["set_LIST_SERVER_FOLDERS"];
+$set_LIST_SERVER_FOLDERS = str_replace(" ","",$set_LIST_SERVER_FOLDERS); if ($set_LIST_SERVER_FOLDERS=="") $set_LIST_SERVER_FOLDERS = "undefined,undefined,undefined,undefined,undefined";
+
+// Info text 
 $set_INFOTEXT = trim($_POST["set_INFOTEXT"]); if (empty($set_INFOTEXT)) $set_INFOTEXT = $INFOTEXTDEFAULT;
 ?>

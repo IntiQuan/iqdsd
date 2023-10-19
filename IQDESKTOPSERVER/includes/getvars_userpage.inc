@@ -14,6 +14,13 @@ $theme = $_POST["theme"];
 $safety_check = $_POST["safety_check"];
 $safety_check_required = $_POST["safety_check_required"];
 
+// The mount labels ... 
+$MOUNT1_LABEL = $_POST["MOUNT1_LABEL"];
+$MOUNT2_LABEL = $_POST["MOUNT2_LABEL"];
+$MOUNT3_LABEL = $_POST["MOUNT3_LABEL"];
+$MOUNT4_LABEL = $_POST["MOUNT4_LABEL"];
+$MOUNT5_LABEL = $_POST["MOUNT5_LABEL"];
+
 // -----------------------------------------------------
 // Checking the input
 // -----------------------------------------------------

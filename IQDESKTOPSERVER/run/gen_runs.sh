@@ -77,6 +77,46 @@ MOUNT_4_OPTIONS="$(sed s#:::#,#g <<<$MOUNT_4_OPTIONS)"
 MOUNT_5_OPTIONS="$(sed s#:::#,#g <<<$MOUNT_5_OPTIONS)"
 
 # ------------------------------------------------------------------------
+# Fix MOUNT if undefined label
+# ------------------------------------------------------------------------
+
+if [[ $MOUNT_1_LABEL == "undefined" ]]; then 
+  MOUNT_1_LABEL=
+  MOUNT_1_SERVER_IP=
+  MOUNT_1_SERVER_FOLDER=
+  MOUNT_1_OPTIONS=
+fi
+
+if [[ $MOUNT_2_LABEL == "undefined" ]]; then 
+  MOUNT_2_LABEL=
+  MOUNT_2_SERVER_IP=
+  MOUNT_2_SERVER_FOLDER=
+  MOUNT_2_OPTIONS=
+fi
+
+if [[ $MOUNT_3_LABEL == "undefined" ]]; then 
+  MOUNT_3_LABEL=
+  MOUNT_3_SERVER_IP=
+  MOUNT_3_SERVER_FOLDER=
+  MOUNT_3_OPTIONS=
+fi
+
+if [[ $MOUNT_4_LABEL == "undefined" ]]; then 
+  MOUNT_4_LABEL=
+  MOUNT_4_SERVER_IP=
+  MOUNT_4_SERVER_FOLDER=
+  MOUNT_4_OPTIONS=
+fi
+
+if [[ $MOUNT_5_LABEL == "undefined" ]]; then 
+  MOUNT_5_LABEL=
+  MOUNT_5_SERVER_IP=
+  MOUNT_5_SERVER_FOLDER=
+  MOUNT_5_OPTIONS=
+fi
+
+
+# ------------------------------------------------------------------------
 # Handle upper to lower case
 # ------------------------------------------------------------------------
 

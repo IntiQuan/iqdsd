@@ -91,8 +91,11 @@ include("../includes/log_adminpage.inc"); // Create logs (after get variables)
         $settingsText .= "$" . "IQRTOOLS_COMPLIANCE_SHOW = " . $set_IQRTOOLS_COMPLIANCE_SHOW . ";\n";
         $settingsText .= "$" . "IQREPORT_TEMPLATE_SHOW = " . $set_IQREPORT_TEMPLATE_SHOW . ";\n";
         $settingsText .= "$" . "MOUNT_SHOW = " . $set_MOUNT_SHOW . ";\n";
+        $settingsText .= "$" . "LIST_SERVER_IP = \"" . $set_LIST_SERVER_IP . "\";\n";
+        $settingsText .= "$" . "LIST_SERVER_OPTIONS = \"" . $set_LIST_SERVER_OPTIONS . "\";\n";
+        $settingsText .= "$" . "LIST_SERVER_FOLDERS = \"" . $set_LIST_SERVER_FOLDERS . "\";\n";
         $settingsText .= "?>\n";
-
+        
         // Save settingsText to file
         file_put_contents("../settings/settings.inc", $settingsText);
 
@@ -571,6 +574,21 @@ include("../includes/log_adminpage.inc"); // Create logs (after get variables)
                     <td><input type="checkbox" name="set_MOUNT_SHOW" value="TRUE" <?php if ($MOUNT_SHOW) echo "checked"; ?>></td>
                     <td>Show server mount information</td>
                 </tr>
+                <tr>
+                    <td>LIST_SERVER_IP:</td>
+                    <td><input type="text" name="set_LIST_SERVER_IP" size="40" value="<?php echo $LIST_SERVER_IP; ?>"></td>
+                    <td>IP address of file server from which to mount folders from within containers using mount_* command</td>
+                </tr>   
+                <tr>
+                    <td>LIST_SERVER_OPTIONS:</td>
+                    <td><input type="text" name="set_LIST_SERVER_OPTIONS" size="40" value="<?php echo $LIST_SERVER_OPTIONS; ?>"></td>
+                    <td>Comma separated list of server folders that are eligible for mounting within containers using mount_* command. Provide miniumum 5 folder names. If 5 are not available, use "undefined" as surrogate!</td>
+                </tr>   
+                <tr>
+                    <td>LIST_SERVER_FOLDERS:</td>
+                    <td><input type="text" name="set_LIST_SERVER_FOLDERS" size="40" value="<?php echo $LIST_SERVER_FOLDERS; ?>"></td>
+                    <td>String with options for mounting folders within containers using mount_* command</td>
+                </tr>   
                 <tr>
                     <td colspan="3"><button type="submit" form="form1" value="Submit" class="buttonSelectCSV">SAVE</button></td>
                 </tr>
