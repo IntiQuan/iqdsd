@@ -21,6 +21,10 @@ $MOUNT3_LABEL = $_POST["MOUNT3_LABEL"];
 $MOUNT4_LABEL = $_POST["MOUNT4_LABEL"];
 $MOUNT5_LABEL = $_POST["MOUNT5_LABEL"];
 
+// USER2 related
+$USER2_NAME_SELECTION = $_POST["USER2_NAME_SELECTION"];
+if ($USER2_NAME_SELECTION=="") $USER2_NAME_SELECTION = "undefined";
+
 // -----------------------------------------------------
 // Checking the input
 // -----------------------------------------------------
@@ -73,6 +77,10 @@ if (strcmp($safety_check_check,$safety_check)!=0) $OK = false;
 // $safety_check_required - enforce no spaces and only standard chars - no specal chars
 $safety_check_required_check = preg_replace('/[^A-Za-z0-9]/', '', $safety_check_required);
 if (strcmp($safety_check_required_check,$safety_check_required)!=0) $OK = false;
+
+// USER2_NAME_SELECTION - allow a-zA-Z0-9
+$USER2_NAME_SELECTION_check = preg_replace('/[^A-Za-z0-9]/', '', $USER2_NAME_SELECTION);
+if (strcmp($USER2_NAME_SELECTION_check,$USER2_NAME_SELECTION)!=0) $OK = false;
 
 if (!$OK) {
 	echo '<html><body>Some GETs or POSTs not within bounds - stopping here ...<br><img src="images/bomb.jpg"></body></html>';

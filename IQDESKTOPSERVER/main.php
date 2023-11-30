@@ -133,6 +133,7 @@ $pathCSV = "settings/";
                 $command .= " \"" . $MOUNT5_LABEL . "\" ";
                 $command .= " \"" . $LIST_SERVER_IP . "\" ";
                 $command .= " \"" . $LIST_SERVER_OPTIONS . "\" ";
+                $command .= " \"" . $USER2_NAME_SELECTION . "\" ";
 
                 # Check if demo mode and then add the stop time
                 if ($csvfile=="01_demo.csv") $command .= $MAX_TIME_HOURS_DEMO . " ";
@@ -251,11 +252,12 @@ $pathCSV = "settings/";
             $USER = $value[1];
             $SAFETY_CHECK = $value[2];
             $PASSWORD = $value[3];
-            $VOLUME_MAP = $value[4];
-            $VNCPORT = $value[5];
-            $SSHPORT = $value[6];
-            $SHINY_SERVER_PORT = $value[7];
-            $USER_ID = $value[8];
+            $USER2 = $value[4];
+            $VOLUME_MAP = $value[5];
+            $VNCPORT = $value[6];
+            $SSHPORT = $value[7];
+            $SHINY_SERVER_PORT = $value[8];
+            $USER_ID = $value[9];
 
             if (!empty($USER)) {
 
@@ -268,6 +270,7 @@ $pathCSV = "settings/";
                     if ($SAFETY_CHECK_SHOW) echo "<th>" . $SAFETY_CHECK_TH_TEXT . "</th>";
                     if ($NAME_SHOW) echo "<th>" . $NAME_TH_TEXT . "</th>";
                     if ($USER_SHOW) echo "<th>" . $USER_TH_TEXT . "</th>";
+                    if ($USER2_SHOW) echo "<th>" . $USER2_TH_TEXT . "</th>";
                     if ($PASSWORD_SHOW) echo "<th>" . $PASSWORD_TH_TEXT . "</th>";
                     if ($VNCPORT_SHOW) echo "<th>" . $VNCPORT_TH_TEXT . "</th>";
                     if ($SSHPORT_SHOW) echo "<th>" . $SSHPORT_TH_TEXT . "</th>";
@@ -320,11 +323,18 @@ $pathCSV = "settings/";
                         } else {
                             $THEMEuser = $THEME;
                         }
+                        // Parse USER2 information        
+                        preg_match_all('/USER2=(["a-zA-z0-9]*)/', $content, $m);
+                        $USER2_NAME = str_replace('"', '', $m[1][0]);
+                        //print("\n\n".$USER2_NAME);
+                        //if($USER2_NAME=="") print("hello");
+                        //exit;
                     } else {
                         $IMAGEuser = $IMAGE;
                         $NR_CORESuser = $NR_CORES;
                         $MEMORY_GBuser = $MEMORY_GB;
                         $THEMEuser = $THEME;
+                        $USER2_NAME = "undefined";
                     }
                     
                     echo "<tr>" . '<td class="control">';
@@ -356,6 +366,23 @@ $pathCSV = "settings/";
                     if ($SAFETY_CHECK_SHOW) echo '<td><input type="'.$inputTypeSafety.'" name="safety_check" size="10"></td>';
                     if ($NAME_SHOW) echo "<td>" . $NAME . "</td>";
                     if ($USER_SHOW) echo "<td class='blue'>" . $USER . "</td>";
+                    
+                    if ($USER2_SHOW) {
+                        if ($USER2!="false") {
+                            $USER2_NAMES_LIST = explode(",",$USER2_NAMES);
+                            #print_r($USER2_NAMES_LIST);
+                            echo '<td class="blue"><select name="USER2_NAME_SELECTION">';
+                            foreach ($USER2_NAMES_LIST as $value) {
+                                echo '  <option value="'.$value.'" ';
+                                if ($value == $USER2_NAME) echo "selected";
+                                echo '>'.$value.'</option>';
+                            }
+                            echo '</select></td>';
+                        } else {
+                            echo '<td class="blue"></td>';
+                        }
+                    }
+
                     if ($PASSWORD_SHOW) echo "<td class='blue'>" . $PASSWORD . "</td>";
                     if ($VNCPORT_SHOW) echo "<td class='blue'>" . $VNCPORT . "</td>";
                     if ($SSHPORT_SHOW) echo "<td class='blue'>" . $SSHPORT . "</td>";

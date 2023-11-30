@@ -2,6 +2,7 @@
 // Define displayed column names in table
 $NAME_TH_TEXT = "Name";
 $USER_TH_TEXT = "Username";
+$USER2_TH_TEXT = "Username2";
 $SAFETY_CHECK_TH_TEXT = "Start Password";
 $PASSWORD_TH_TEXT = "Password";
 $IMAGE_TH_TEXT = "IQdesktop Version";

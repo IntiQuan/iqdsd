@@ -63,8 +63,19 @@ MOUNT_5_SERVER_IP=${46}
 MOUNT_5_SERVER_FOLDER=${47}  
 MOUNT_5_OPTIONS=${48} 
 
-ORGANIZATION=${49} 
-LICENSEKEY=${50} 
+USER2NAME=${49} 
+
+ORGANIZATION=${50} 
+LICENSEKEY=${51} 
+
+# ------------------------------------------------------------------------
+# Fix USER2NAME if undefined 
+# ------------------------------------------------------------------------
+
+if [[ $USER2NAME == "undefined" ]]; then 
+  USER2NAME=
+fi
+
 
 # ------------------------------------------------------------------------
 # Fix MOUNT_n_OPTIONS Replace ::: by ,
@@ -148,6 +159,7 @@ sed -i "s#%PRIVILEGED%#$PRIVILEGED#g" $CUSTOM_YML_FILE
 sed -i "s#%MOUNT_BASENAME%#$MOUNTBASENAME#g" $CUSTOM_YML_FILE
 
 sed -i "s#%USER%#$USER#g" $CUSTOM_YML_FILE
+sed -i "s#%USER2%#$USER2NAME#g" $CUSTOM_YML_FILE
 sed -i "s#%IMAGE%#$IMAGE#g" $CUSTOM_YML_FILE
 sed -i "s#%VNCPORT%#$VNCPORT#g" $CUSTOM_YML_FILE
 sed -i "s#%SSHPORT%#$SSHPORT#g" $CUSTOM_YML_FILE

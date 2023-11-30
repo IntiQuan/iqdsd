@@ -20,6 +20,7 @@ services:
       - LICENSEKEY=%LICENSEKEY%
       - TIMEZONE=%TIMEZONE%
       - USER=%USER%  
+      - USER2=%USER2%  
       - PASSWORD=%PASSWORD%
       - ALLOW_SUDO=%ALLOW_SUDO%
       - USER_ID=%USER_ID%

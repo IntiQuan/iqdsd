@@ -43,6 +43,7 @@ $MEMORY_GB = 8;
 ///////////////////////////
 $NAME_SHOW = TRUE;
 $USER_SHOW = TRUE;
+$USER2_SHOW = TRUE;
 $SAFETY_CHECK_SHOW = TRUE;
 $PASSWORD_SHOW = FALSE;
 $IMAGE_SHOW = TRUE;
@@ -66,4 +67,5 @@ $MOUNT_SHOW = FALSE;
 $LIST_SERVER_IP = "";
 $LIST_SERVER_OPTIONS = "vers=2.0;username=%USER%;noauto;user";
 $LIST_SERVER_FOLDERS = "";
+$USER2_NAMES = "";
 ?>

@@ -52,6 +52,7 @@ $set_MONOLIX_LICENSE_KEY = str_replace("\"","&&&",$set_MONOLIX_LICENSE_KEY);
 $set_NAME_SHOW = $_POST["set_NAME_SHOW"]; if ($set_NAME_SHOW != "TRUE") $set_NAME_SHOW = "FALSE";
 $set_SAFETY_CHECK_SHOW = $_POST["set_SAFETY_CHECK_SHOW"]; if ($set_SAFETY_CHECK_SHOW != "TRUE") $set_SAFETY_CHECK_SHOW = "FALSE";
 $set_USER_SHOW = $_POST["set_USER_SHOW"]; if ($set_USER_SHOW != "TRUE") $set_USER_SHOW = "FALSE";
+$set_USER2_SHOW = $_POST["set_USER2_SHOW"]; if ($set_USER2_SHOW != "TRUE") $set_USER2_SHOW = "FALSE";
 $set_PASSWORD_SHOW = $_POST["set_PASSWORD_SHOW"]; if ($set_PASSWORD_SHOW != "TRUE") $set_PASSWORD_SHOW = "FALSE";
 $set_IMAGE_SHOW = $_POST["set_IMAGE_SHOW"]; if ($set_IMAGE_SHOW != "TRUE") $set_IMAGE_SHOW = "FALSE";
 $set_VOLUME_MAP_SHOW = $_POST["set_VOLUME_MAP_SHOW"]; if ($set_VOLUME_MAP_SHOW != "TRUE") $set_VOLUME_MAP_SHOW = "FALSE";
@@ -79,6 +80,10 @@ $set_LIST_SERVER_OPTIONS = $_POST["set_LIST_SERVER_OPTIONS"];
 $set_LIST_SERVER_OPTIONS = str_replace(" ","",$set_LIST_SERVER_OPTIONS); if ($set_LIST_SERVER_OPTIONS=="") $set_LIST_SERVER_OPTIONS = "vers=2.0;username=%USER%;noauto;user";
 $set_LIST_SERVER_FOLDERS = $_POST["set_LIST_SERVER_FOLDERS"];
 $set_LIST_SERVER_FOLDERS = str_replace(" ","",$set_LIST_SERVER_FOLDERS); if ($set_LIST_SERVER_FOLDERS=="") $set_LIST_SERVER_FOLDERS = "undefined,undefined,undefined,undefined,undefined";
+
+// USER2 settings
+$set_USER2_NAMES = $_POST["set_USER2_NAMES"];
+$set_USER2_NAMES = str_replace(" ","",$set_USER2_NAMES); if ($set_USER2_NAMES=="") $set_USER2_NAMES = "Undefined";
 
 // Info text 
 $set_INFOTEXT = trim($_POST["set_INFOTEXT"]); if (empty($set_INFOTEXT)) $set_INFOTEXT = $INFOTEXTDEFAULT;

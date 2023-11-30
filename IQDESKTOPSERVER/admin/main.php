@@ -71,6 +71,7 @@ include("../includes/log_adminpage.inc"); // Create logs (after get variables)
         $settingsText .= "///////////////////////////\n";
         $settingsText .= "$" . "NAME_SHOW = " . $set_NAME_SHOW . ";\n";
         $settingsText .= "$" . "USER_SHOW = " . $set_USER_SHOW . ";\n";
+        $settingsText .= "$" . "USER2_SHOW = " . $set_USER2_SHOW . ";\n";
         $settingsText .= "$" . "SAFETY_CHECK_SHOW = " . $set_SAFETY_CHECK_SHOW . ";\n";
         $settingsText .= "$" . "PASSWORD_SHOW = " . $set_PASSWORD_SHOW . ";\n";
         $settingsText .= "$" . "IMAGE_SHOW = " . $set_IMAGE_SHOW . ";\n";
@@ -94,6 +95,7 @@ include("../includes/log_adminpage.inc"); // Create logs (after get variables)
         $settingsText .= "$" . "LIST_SERVER_IP = \"" . $set_LIST_SERVER_IP . "\";\n";
         $settingsText .= "$" . "LIST_SERVER_OPTIONS = \"" . $set_LIST_SERVER_OPTIONS . "\";\n";
         $settingsText .= "$" . "LIST_SERVER_FOLDERS = \"" . $set_LIST_SERVER_FOLDERS . "\";\n";
+        $settingsText .= "$" . "USER2_NAMES = \"" . $set_USER2_NAMES . "\";\n";
         $settingsText .= "?>\n";
         
         // Save settingsText to file
@@ -480,6 +482,11 @@ include("../includes/log_adminpage.inc"); // Create logs (after get variables)
                     <td>Show User column</td>
                 </tr>
                 <tr>
+                    <td>USER2_SHOW:</td>
+                    <td><input type="checkbox" name="set_USER2_SHOW" value="TRUE" <?php if ($USER2_SHOW) echo "checked"; ?>></td>
+                    <td>Show USER2 column to allow an alternative username, if needed</td>
+                </tr>
+                <tr>
                     <td>PASSWORD_SHOW:</td>
                     <td><input type="checkbox" name="set_PASSWORD_SHOW" value="TRUE" <?php if ($PASSWORD_SHOW) echo "checked"; ?>></td>
                     <td>Show Password column</td>
@@ -588,6 +595,11 @@ include("../includes/log_adminpage.inc"); // Create logs (after get variables)
                     <td>LIST_SERVER_FOLDERS:</td>
                     <td><input type="text" name="set_LIST_SERVER_FOLDERS" size="40" value="<?php echo $LIST_SERVER_FOLDERS; ?>"></td>
                     <td>String with options for mounting folders within containers using mount_* command</td>
+                </tr>   
+                <tr>
+                    <td>USER2_NAMES:</td>
+                    <td><input type="text" name="set_USER2_NAMES" size="40" value="<?php echo $USER2_NAMES; ?>"></td>
+                    <td>Comma separated list of possible USER2 names to select</td>
                 </tr>   
                 <tr>
                     <td colspan="3"><button type="submit" form="form1" value="Submit" class="buttonSelectCSV">SAVE</button></td>

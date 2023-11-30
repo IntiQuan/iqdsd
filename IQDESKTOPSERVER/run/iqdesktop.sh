@@ -1,6 +1,6 @@
 #!/bin/bash
 # ------------------------------------------------------------------------------------------------
-#  iqdesktop start username config.csv image ncores memorygb theme swapspace sudo privileged mount_basename iqrtoolscompliance sshserver shinyserver macaddress timezone iqreporttemplate nonmemlicensekey monolixlicensekey organization licensekey mount1 mount2 mount3 mount4 mount5 mountip mountoptions [timedelaystophours]
+#  iqdesktop start username config.csv image ncores memorygb theme swapspace sudo privileged mount_basename iqrtoolscompliance sshserver shinyserver macaddress timezone iqreporttemplate nonmemlicensekey monolixlicensekey organization licensekey mount1 mount2 mount3 mount4 mount5 mountip mountoptions user2 [timedelaystophours]
 #  test stop all|username 
 # ------------------------------------------------------------------------------------------------
 
@@ -19,9 +19,9 @@
 NARGS=$#
 
 # Require correct number of input arguments
-if [[ $NARGS != 2 ]] && [[ $NARGS < 26 ]]; then 
+if [[ $NARGS != 2 ]] && [[ $NARGS < 27 ]]; then 
 	echo "Usage:"
-	echo "        iqdesktop start username config.csv image ncores memorygb theme swapspace sudo privileged mount_basename iqrtoolscompliance sshserver shinyserver macaddress timezone iqreporttemplate nonmemlicensekey monolixlicensekey organization licensekey mount1 mount2 mount3 mount4 mount5 mountip mountoptions [timedelaystophours]"
+	echo "        iqdesktop start username config.csv image ncores memorygb theme swapspace sudo privileged mount_basename iqrtoolscompliance sshserver shinyserver macaddress timezone iqreporttemplate nonmemlicensekey monolixlicensekey organization licensekey mount1 mount2 mount3 mount4 mount5 mountip mountoptions user2 [timedelaystophours]"
 	echo "        iqdesktop stop username"
 	exit 0
 fi
@@ -39,8 +39,8 @@ if [[ $COMMAND == "stop" ]];  then
 fi
 
 if [[ $COMMAND == "start" ]]; then
-    if [[ $NARGS < 28 ]]; then
-        echo "start command requires 28 or 29 input arguments - not useful for command line ..."
+    if [[ $NARGS < 29 ]]; then
+        echo "start command requires 29 or 30 input arguments - not useful for command line ..."
         exit 0
     fi
 fi
@@ -89,7 +89,8 @@ ARGmount4=${25}
 ARGmount5=${26} 
 ARGmountip=${27} 
 ARGmountoptions=${28}
-DELAYHOURS=${29}
+USER2NAME=${29}   # "undefined" if undefined and not needed
+DELAYHOURS=${30}
 
 if [[ $ARGiqreporttemplate == "default" ]]; then
     ARGiqreporttemplate=
@@ -110,7 +111,7 @@ chmod +x stop_runs.sh
 if [[ $COMMAND == "start" ]]; then 
     OLDIFS=$IFS
     IFS=','
-    while read NAME USER SAFETY_CHECK PASSWORD VOLUME_MAP VNCPORT SSHPORT SHINY_SERVER_PORT USER_ID IQREPORT_LICENSE_KEY AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY
+    while read NAME USER SAFETY_CHECK PASSWORD USER2DUMMY VOLUME_MAP VNCPORT SSHPORT SHINY_SERVER_PORT USER_ID IQREPORT_LICENSE_KEY AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY
      
     do
         # Do not handle header row ("USER" in "USER" column)
@@ -161,6 +162,7 @@ if [[ $COMMAND == "start" ]]; then
                     "$ARGmount3" "$ARGmountip" "$ARGmount3" "$ARGmountoptions" \
                     "$ARGmount4" "$ARGmountip" "$ARGmount4" "$ARGmountoptions" \
                     "$ARGmount5" "$ARGmountip" "$ARGmount5" "$ARGmountoptions" \
+                    "$USER2NAME" \
                     "$ARGorganization" "$ARGlicensekey"
 					
 				# If defined then start the time delayed stopping of the container
