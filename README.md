@@ -11,7 +11,7 @@ This repository contains needed scripts and material to set up a multi-user serv
 ![IQdesktop Server User Page](material/interface.png "User Interface")
 
 ## Requirements
-* Ubuntu 18/20.0.4 LTS Server
+* Ubuntu 24.04 LTS Server
 * Docker and docker-compose
 * Apache, PHP
 * Some additional utilities
