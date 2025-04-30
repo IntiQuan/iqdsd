@@ -80,6 +80,7 @@ $pathCSV = "settings/";
     // -----------------------------------------------------------------------------
 
     if ($do == "control") {
+        $command = "none";
 
         # Handle stopping with and without safety check
         # Safety check entry is a component to ensure that only the person with the safety check password can stop a container
@@ -156,14 +157,18 @@ $pathCSV = "settings/";
 	        header( "Refresh:8; url=main.php?do=control&csvfile=$csvfile", true, 303);
         }
 
+<<<<<<< HEAD
         echo '<pre>';
         echo $command;
+=======
+>>>>>>> da1612469c771d3ceb0e1edceab81d7ac8bc0b4f
         $old_path = getcwd();
         chdir($path);
         shell_exec("chmod +x iqdesktop.sh");
-        shell_exec($command);
+        if ($command != "none") {
+            shell_exec($command);
+        }
         chdir($old_path);
-        echo '</pre>';
 
         // sleep for 5 seconds to let the shell script run
         //sleep(5);
@@ -173,7 +178,8 @@ $pathCSV = "settings/";
     // Find available iqdesktop versions
     // -----------------------------------------------------------------------------
     system('docker images --filter=reference=intiquan/iqdesktop:*.* > temp');
-    $content = file_get_contents(temp);
+    $content = file_get_contents("temp");
+
     //print_r($content);
     preg_match_all('/intiquan\/iqdesktop[ ]+([0-9.]+)/', $content, $m);
     //print_r($m[0]);
