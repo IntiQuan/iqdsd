@@ -157,11 +157,6 @@ $pathCSV = "settings/";
 	        header( "Refresh:8; url=main.php?do=control&csvfile=$csvfile", true, 303);
         }
 
-<<<<<<< HEAD
-        echo '<pre>';
-        echo $command;
-=======
->>>>>>> da1612469c771d3ceb0e1edceab81d7ac8bc0b4f
         $old_path = getcwd();
         chdir($path);
         shell_exec("chmod +x iqdesktop.sh");
