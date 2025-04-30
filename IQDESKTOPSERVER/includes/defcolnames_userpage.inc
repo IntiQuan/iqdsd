@@ -21,5 +21,7 @@ $NR_CORES_TH_TEXT = "Nr Cores";
 $MEMORY_GB_TH_TEXT = "Memory [GB]";
 $TIMEZONE_TH_TEXT = "Timezone";
 $IQRTOOLS_COMPLIANCE_TH_TEXT = "IQR Tools Compliance";
+$CUSTOMCONTENT_TH_TEXT = "Custom Content";
+$CUSTOMCONTENTPW_TH_TEXT = "Custom Content Password";
 $IQREPORT_TEMPLATE_TH_TEXT = "IQReport Template";
 ?>

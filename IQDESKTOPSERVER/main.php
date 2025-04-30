@@ -122,8 +122,8 @@ $pathCSV = "settings/";
                 # Construct iqdesktop.sh call
                 $command = "./iqdesktop.sh start " . $user . " " . $csvfilepath . " " . $image . " " . $nrcores . " " . $memgb . " " . $theme . " " . $SHM_SIZE_GB . " ";
                 $command .= $ALLOW_SUDO . " " . $PRIVILEGED . " " . $MOUNT_BASENAME . " ";
-                $command .= $IQRTOOLS_COMPLIANCE . " " . $SSH_SERVER . " " . $ALLOW_SHINY_SERVER . " " . $MAC_ADDRESS . " " . $TIMEZONE . " " . $IQREPORT_TEMPLATE . " ";
-                $command .= $NONMEM_LICENSE_KEY . " \"" . $MONOLIX_LICENSE_KEY . "\" ";
+                $command .= $IQRTOOLS_COMPLIANCE . " " . $SSH_SERVER . " " . $ALLOW_SHINY_SERVER . " " . $MAC_ADDRESS . " " . $TIMEZONE . " " . $CUSTOMCONTENT . " ";
+                $command .= " '" . $CUSTOMCONTENTPW . "' " . $IQREPORT_TEMPLATE . " " . $NONMEM_LICENSE_KEY . " \"" . $MONOLIX_LICENSE_KEY . "\" ";
                 $command .= " \"" . $ORGANIZATION . "\" ";
                 $command .= " \"" . $LICENSEKEY . "\" ";
                 $command .= " \"" . $MOUNT1_LABEL . "\" ";
@@ -157,6 +157,7 @@ $pathCSV = "settings/";
         }
 
         echo '<pre>';
+        echo $command;
         $old_path = getcwd();
         chdir($path);
         shell_exec("chmod +x iqdesktop.sh");
@@ -262,6 +263,8 @@ $pathCSV = "settings/";
             if (!empty($USER)) {
 
                 if (empty($VOLUME_MAP)) $VOLUME_MAP = "Not mapped";
+                if (empty($CUSTOMCONTENT)) $CUSTOMCONTENT = "Default";
+                if (empty($CUSTOMCONTENTPW)) $CUSTOMCONTENTPW = "Undefined";
                 if (empty($IQREPORT_TEMPLATE)) $IQREPORT_TEMPLATE = "Default";
 
                 if ($header == 1) {
@@ -288,6 +291,8 @@ $pathCSV = "settings/";
                     if ($MAC_SHOW) echo "<th>" . $MAC_TH_TEXT . "</th>";
                     if ($TIMEZONE_SHOW) echo "<th>" . $TIMEZONE_TH_TEXT . "</th>";
                     if ($IQRTOOLS_COMPLIANCE_SHOW) echo "<th>" . $IQRTOOLS_COMPLIANCE_TH_TEXT . "</th>";
+                    if ($CUSTOMCONTENT_SHOW) echo "<th>" . $CUSTOMCONTENT_TH_TEXT . "</th>";
+                    if ($CUSTOMCONTENTPW_SHOW) echo "<th>" . $CUSTOMCONTENTPW_TH_TEXT . "</th>";
                     if ($IQREPORT_TEMPLATE_SHOW) echo "<th>" . $IQREPORT_TEMPLATE_TH_TEXT . "</th>";
                     
                     if ($MOUNT_SHOW) {
@@ -561,6 +566,8 @@ $pathCSV = "settings/";
 
                     if ($TIMEZONE_SHOW) echo "<td class='blue'>" . $TIMEZONE . "</td>";
                     if ($IQRTOOLS_COMPLIANCE_SHOW) echo "<td class='blue'>" . $IQRTOOLS_COMPLIANCE . "</td>";
+                    if ($CUSTOMCONTENT_SHOW) echo "<td class='blue'>" . $CUSTOMCONTENT . "</td>";
+                    if ($CUSTOMCONTENTPW_SHOW) echo "<td class='blue'>" . $CUSTOMCONTENTPW . "</td>";
                     if ($IQREPORT_TEMPLATE_SHOW) echo "<td class='blue'>" . $IQREPORT_TEMPLATE . "</td>";
                     
                     # Only show the folders for selection when the container is NOT running.

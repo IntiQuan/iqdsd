@@ -1,6 +1,6 @@
 #!/bin/bash
 # ------------------------------------------------------------------------------------------------
-#  iqdesktop start username config.csv image ncores memorygb theme swapspace sudo privileged mount_basename iqrtoolscompliance sshserver shinyserver macaddress timezone iqreporttemplate nonmemlicensekey monolixlicensekey organization licensekey mount1 mount2 mount3 mount4 mount5 mountip mountoptions user2 [timedelaystophours]
+#  iqdesktop start username config.csv image ncores memorygb theme swapspace sudo privileged mount_basename iqrtoolscompliance sshserver shinyserver macaddress timezone customcontent customcontentpw iqreporttemplate nonmemlicensekey monolixlicensekey organization licensekey mount1 mount2 mount3 mount4 mount5 mountip mountoptions user2 [timedelaystophours]
 #  test stop all|username 
 # ------------------------------------------------------------------------------------------------
 
@@ -19,9 +19,9 @@
 NARGS=$#
 
 # Require correct number of input arguments
-if [[ $NARGS != 2 ]] && [[ $NARGS < 27 ]]; then 
+if [[ $NARGS != 2 ]] && [[ $NARGS < 30 ]]; then 
 	echo "Usage:"
-	echo "        iqdesktop start username config.csv image ncores memorygb theme swapspace sudo privileged mount_basename iqrtoolscompliance sshserver shinyserver macaddress timezone iqreporttemplate nonmemlicensekey monolixlicensekey organization licensekey mount1 mount2 mount3 mount4 mount5 mountip mountoptions user2 [timedelaystophours]"
+	echo "        iqdesktop start username config.csv image ncores memorygb theme swapspace sudo privileged mount_basename iqrtoolscompliance sshserver shinyserver macaddress timezone customcontent customcontentpw iqreporttemplate nonmemlicensekey monolixlicensekey organization licensekey mount1 mount2 mount3 mount4 mount5 mountip mountoptions user2 [timedelaystophours]"
 	echo "        iqdesktop stop username"
 	exit 0
 fi
@@ -39,7 +39,7 @@ if [[ $COMMAND == "stop" ]];  then
 fi
 
 if [[ $COMMAND == "start" ]]; then
-    if [[ $NARGS < 29 ]]; then
+    if [[ $NARGS < 30 ]]; then
         echo "start command requires 29 or 30 input arguments - not useful for command line ..."
         exit 0
     fi
@@ -77,20 +77,22 @@ ARGsshserver=${13}
 ARGshinyserver=${14}
 ARGmacaddress=${15}
 ARGtimezone=${16}
-ARGiqreporttemplate=${17}
-ARGnonmemlicensekey=${18}
-ARGmonolixlicensekey=${19}
-ARGorganization=${20}
-ARGlicensekey=${21}
-ARGmount1=${22} 
-ARGmount2=${23} 
-ARGmount3=${24} 
-ARGmount4=${25} 
-ARGmount5=${26} 
-ARGmountip=${27} 
-ARGmountoptions=${28}
-USER2NAME=${29}   # "undefined" if undefined and not needed
-DELAYHOURS=${30}
+ARGcustomcontent=${17}
+ARGcustomcontentpw=${18}
+ARGiqreporttemplate=${19}
+ARGnonmemlicensekey=${20}
+ARGmonolixlicensekey=${21}
+ARGorganization=${22}
+ARGlicensekey=${23}
+ARGmount1=${24} 
+ARGmount2=${25} 
+ARGmount3=${26} 
+ARGmount4=${27} 
+ARGmount5=${28} 
+ARGmountip=${29} 
+ARGmountoptions=${30}
+USER2NAME=${31}   # "undefined" if undefined and not needed
+DELAYHOURS=${32}
 
 if [[ $ARGiqreporttemplate == "default" ]]; then
     ARGiqreporttemplate=
@@ -154,7 +156,7 @@ if [[ $COMMAND == "start" ]]; then
                 echo "Handling setup for: $NAME"
                 ./gen_runs.sh "$USER" "$PASSWORD" "$ARGIMAGE" "$VOLUME_MAP" "$VNCPORT" "$SSHPORT" "$SHINY_SERVER_PORT" \
                     "$ARGSUDO" "$ARGsshserver" "$ARGshinyserver" "$USER_ID" "$ARGTHEME" "$ARGmacaddress" "$ARGSWAP" "$ARGNCORES" \
-                    "$ARGMEM" "$ARGtimezone" "$ARGiqrtoolscompliance" "$ARGiqreporttemplate" "$IQREPORT_LICENSE_KEY" "$ARGnonmemlicensekey" \
+                    "$ARGMEM" "$ARGtimezone" "$ARGiqrtoolscompliance" "$ARGcustomcontent" "$ARGcustomcontentpw" "$ARGiqreporttemplate" "$IQREPORT_LICENSE_KEY" "$ARGnonmemlicensekey" \
                     "$ARGmonolixlicensekey" "$VNC_PRIVATE_KEY" "$VNC_CERTIFICATE" "$AWS_ACCESS_KEY_ID" "$AWS_SECRET_ACCESS_KEY" \
                     "$ARGPRIVILEGED" "$ARGMOUNTBASENAME" \
                     "$ARGmount1" "$ARGmountip" "$ARGmount1" "$ARGmountoptions" \

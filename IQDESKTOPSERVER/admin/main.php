@@ -54,6 +54,8 @@ include("../includes/log_adminpage.inc"); // Create logs (after get variables)
         $settingsText .= "$" . "MOUNT_BASENAME = \"" . $set_MOUNT_BASENAME . "\";\n";
         $settingsText .= "$" . "MAC_ADDRESS = \"" . $set_MAC_ADDRESS . "\";\n";
         $settingsText .= "$" . "TIMEZONE = \"" . $set_TIMEZONE . "\";\n";
+        $settingsText .= "$" . "CUSTOMCONTENT = \"" . $set_CUSTOMCONTENT . "\";\n";
+        $settingsText .= "$" . "CUSTOMCONTENTPW = \"" . $set_CUSTOMCONTENTPW . "\";\n";
         $settingsText .= "$" . "IQREPORT_TEMPLATE = \"" . $set_IQREPORT_TEMPLATE . "\";\n";
         $settingsText .= "$" . "IQRTOOLS_COMPLIANCE = \"" . $set_IQRTOOLS_COMPLIANCE . "\";\n";
         $settingsText .= "$" . "NONMEM_LICENSE_KEY = \"" . $set_NONMEM_LICENSE_KEY . "\";\n";
@@ -90,6 +92,8 @@ include("../includes/log_adminpage.inc"); // Create logs (after get variables)
         $settingsText .= "$" . "MEMORY_GB_SHOW = " . $set_MEMORY_GB_SHOW . ";\n";
         $settingsText .= "$" . "TIMEZONE_SHOW = " . $set_TIMEZONE_SHOW . ";\n";
         $settingsText .= "$" . "IQRTOOLS_COMPLIANCE_SHOW = " . $set_IQRTOOLS_COMPLIANCE_SHOW . ";\n";
+        $settingsText .= "$" . "CUSTOMCONTENT_SHOW = " . $set_CUSTOMCONTENT_SHOW . ";\n";
+        $settingsText .= "$" . "CUSTOMCONTENTPW_SHOW = " . $set_CUSTOMCONTENTPW_SHOW . ";\n";
         $settingsText .= "$" . "IQREPORT_TEMPLATE_SHOW = " . $set_IQREPORT_TEMPLATE_SHOW . ";\n";
         $settingsText .= "$" . "MOUNT_SHOW = " . $set_MOUNT_SHOW . ";\n";
         $settingsText .= "$" . "LIST_SERVER_IP = \"" . $set_LIST_SERVER_IP . "\";\n";
@@ -398,6 +402,16 @@ include("../includes/log_adminpage.inc"); // Create logs (after get variables)
                     <td>Define time zone (<a href="https://en.wikipedia.org/wiki/List_of_tz_database_time_zones" target="tz">see here</a>)</td>
                 </tr>
                 <tr>
+                    <td>CUSTOMCONTENT:</td>
+                    <td><input type="text" name="set_CUSTOMCONTENT" size="20" value="<?php echo $CUSTOMCONTENT; ?>"></td>
+                    <td>Define the name of the custom content zip file</td>
+                </tr>
+                <tr>
+                    <td>CUSTOMCONTENTPW:</td>
+                    <td><input type="text" name="set_CUSTOMCONTENTPW" size="20" value="<?php echo $CUSTOMCONTENTPW; ?>"></td>
+                    <td>Define the password for the custom content zip file</td>
+                </tr>
+                <tr>
                     <td>IQREPORT_TEMPLATE:</td>
                     <td><input type="text" name="set_IQREPORT_TEMPLATE" size="20" value="<?php echo $IQREPORT_TEMPLATE; ?>"></td>
                     <td>Define the IQReport templates to be installed (set to "default" in default case)</td>
@@ -570,6 +584,16 @@ include("../includes/log_adminpage.inc"); // Create logs (after get variables)
                     <td>IQRTOOLS_COMPLIANCE_SHOW:</td>
                     <td><input type="checkbox" name="set_IQRTOOLS_COMPLIANCE_SHOW" value="TRUE" <?php if ($IQRTOOLS_COMPLIANCE_SHOW) echo "checked"; ?>></td>
                     <td>Show IQR Tools Compliance column</td>
+                </tr>
+                <tr>
+                    <td>CUSTOMCONTENT:</td>
+                    <td><input type="checkbox" name="set_CUSTOMCONTENT_SHOW" value="TRUE" <?php if ($CUSTOMCONTENT_SHOW) echo "checked"; ?>></td>
+                    <td>Show custom content selection column</td>
+                </tr>
+                <tr>
+                    <td>CUSTOMCONTENTPW_SHOW:</td>
+                    <td><input type="checkbox" name="set_CUSTOMCONTENTPW_SHOW" value="TRUE" <?php if ($CUSTOMCONTENTPW_SHOW) echo "checked"; ?>></td>
+                    <td>Show custom content password selection column</td>
                 </tr>
                 <tr>
                     <td>IQREPORT_TEMPLATE_SHOW:</td>
