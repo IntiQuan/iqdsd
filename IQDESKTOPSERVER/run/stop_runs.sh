@@ -10,7 +10,10 @@ if [[ -n $DELAYHOURS ]]; then
 fi
 
 # Get running containers for provided user
-X=$(docker container ls -q -f name="\\_$USER\\_")
+# On previous version:
+# X=$(docker container ls -q -f name="\\_$USER\\_")
+# Updated 2025-12-15
+X=$(docker container ls -q -f name="_$USER-")
 
 # Exit if no container running for defined user
 if [[ -z $X ]]; then 

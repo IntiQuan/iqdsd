@@ -252,5 +252,8 @@ fi
 # ------------------------------------------------------------------------
 
 echo "==> Starting $IMAGE docker container for $USER ..."
-docker-compose -f $CUSTOM_YML_FILE up &
+# On previous version:
+# X=$(docker container ls -q -f name="\\_$USER\\_")
+# Updated 2025-12-15
+docker compose -f $CUSTOM_YML_FILE up &
 echo "    Running ..."

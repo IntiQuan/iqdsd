@@ -172,15 +172,38 @@ $pathCSV = "settings/";
     // -----------------------------------------------------------------------------
     // Find available iqdesktop versions
     // -----------------------------------------------------------------------------
-    system('docker images --filter=reference=intiquan/iqdesktop:*.* > temp');
-    $content = file_get_contents("temp");
+    
+	# On previous version:
+	
+	// system('docker images --filter=reference=intiquan/iqdesktop:*.* > temp');
+    // $content = file_get_contents("temp");
+    // //print_r($content);
+    // preg_match_all('/intiquan\/iqdesktop[ ]+([0-9.]+)/', $content, $m);
+    // //print_r($m[0]);
+    // $IMAGE_VERSIONS = $m[0];
+    // // Define default image as the latest one
+    // $IMAGE = str_replace("   ", ":", $IMAGE_VERSIONS[0]);
+	
+	# Updated 2025-12-15
+	system("docker image ls --filter=reference='intiquan/iqdesktop:.' --format '{{.Repository}}:{{.Tag}}' > temp 2>&1");
+	$content = filegetcontents("temp");
+	$lines = pregsplit('/\r\n|\r|\n/', trim($content));
+	$tags = [];
+	foreach ($lines as $line) {
+		if (pregmatch('/^intiquan\/iqdesktop:([0-9.]+)$/', $line, $m)) {
+			$tags[] = $m[1];
+		}
+	}
+	if (empty($tags)) {
+		$IMAGEVERSIONS = [];
+		$IMAGE = null; // or a sensible default
+	} else {
+		usort($tags, fn($a, $b) => versioncompare($b, $a)); // latest first
+		$IMAGEVERSIONS = arraymap(fn($t) => "intiquan/iqdesktop:$t", $tags);
+		$IMAGE = $IMAGE_VERSIONS[0]; // define default image as the latest one
+	}
 
-    //print_r($content);
-    preg_match_all('/intiquan\/iqdesktop[ ]+([0-9.]+)/', $content, $m);
-    //print_r($m[0]);
-    $IMAGE_VERSIONS = $m[0];
-    // Define default image as the latest one
-    $IMAGE = str_replace("   ", ":", $IMAGE_VERSIONS[0]);
+
 
     // -----------------------------------------------------------------------------
     // Read CSV if filename defined and build table
